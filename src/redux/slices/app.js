@@ -17,7 +17,7 @@ const slice = createSlice({
         toggleSideBar(state, action) {
             state.sidebar.open = !state.sidebar.open
         },
-        updateSideBarType(state, action) {
+        UpdateSideBarType(state, action) {
             state.sidebar.type = action.payload.type;
         }
     }
@@ -31,9 +31,9 @@ export function ToggleSideBar() {
     }
 }
 
-export function UpdateSideBar(type) {
+export function UpdateSideBarType(type) {
     return async () => {
-        dispatch(slice.actions.updateSideBarType({
+        dispatch(slice.actions.UpdateSideBarType({
             type,
         }))
     }
