@@ -1,22 +1,55 @@
-import { Avatar, Box, Divider, IconButton, Menu, MenuItem, Stack } from '@mui/material'
+import { Avatar, Box, Divider, IconButton, Menu, Fade, MenuItem, Stack } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { Gear } from 'phosphor-react'
 import React, { useState } from 'react'
 import { faker } from "@faker-js/faker";
 
 import Logo from "../../assets/Images/logo.ico"
-
 import { Nav_Buttons } from '../../data'
 import useSettings from "../../hooks/useSettings"
 import AntSwitch from '../../components/AntSwitch';
 import { Profile_Menu } from '../../data';
+import { useNavigate } from 'react-router-dom';
 
+const getPath = (index) => {
+    switch (index) {
+        case 0:
+            return "/app"
+        case 1:
+            return "/group"
+        case 2:
+            return "/call"
+        case 3:
+            return "/settings"
+        default:
+            break;
+    }
+}
+
+const getMenuPath = (index) => {
+    switch (index) {
+        case 0:
+            return "/profile"
+        case 1:
+            return "/settings"
+        case 2:
+            // Todo => Updatae token and set isAuthenticated to false and logout the use
+            return "/auth/login"
+
+        default:
+            break;
+    }
+}
 
 const Sidebar = () => {
 
     const [selected, setSelected] = useState(0)
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const theme = useTheme()
     const open = Boolean(anchorEl);
+
+    const navigate = useNavigate();
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -27,7 +60,6 @@ const Sidebar = () => {
         setAnchorEl(null);
     };
 
-    const theme = useTheme()
     return (
         <Box sx={{ backgroundColor: theme.palette.background.paper, padding: 2, boxShadow: "0px 0px 2px rgba(0,0,0,0.25)", height: "100vh", width: 100 }}>
             <Stack direction={"column"} justifyContent={"space-between"} alignItems={"center"} sx={{ width: "100%", height: "100%" }} spacing={3}>
@@ -49,7 +81,10 @@ const Sidebar = () => {
                                 :
                                 (
                                     <IconButton
-                                        onClick={() => setSelected(el.index)}
+                                        onClick={() => {
+                                            setSelected(el.index)
+                                            navigate(getPath(el.index))
+                                        }}
                                         key={el.index}
                                         sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }} >
                                         {el.icon}
@@ -64,7 +99,10 @@ const Sidebar = () => {
                                 </IconButton>
                             </Box> : <IconButton
                                 sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }}
-                                onClick={() => setSelected(3)}> <Gear /> </IconButton>
+                                onClick={() => {
+                                    setSelected(3)
+                                    navigate(getPath(3))
+                                }}> <Gear /> </IconButton>
                         }
                     </Stack>
                 </Stack>
@@ -79,13 +117,15 @@ const Sidebar = () => {
                         onClick={handleClick}
                         src={faker.image.avatar()} />
                     <Menu
-                        id="basic-menu"
+                        MenuListProps={{
+                            'aria-labelledby': 'fade-button',
+                        }}
+                        TransitionComponent={Fade}
+                        id="profile-positioned-menu"
+                        aria-labelledby='profile-positioned-button'
                         anchorEl={anchorEl}
                         open={open}
                         onClose={handleClose}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button',
-                        }}
                         anchorOrigin={{
                             vertical: "bottom",
                             horizontal: "right"
@@ -98,8 +138,8 @@ const Sidebar = () => {
                         <Stack spacing={1} px={1} >
                             {Profile_Menu.map((el, ind) => {
                                 return (
-                                    <MenuItem key={ind} onClick={handleClick}>
-                                        <Stack sx={{ width: 100 }} direction={"row"} alignItems={"center"} justifyContent={"space-between"} >
+                                    <MenuItem key={ind} onClick={handleClose}>
+                                        <Stack onClick={() => navigate(getMenuPath(ind))} sx={{ width: 100 }} direction={"row"} alignItems={"center"} justifyContent={"space-between"} >
                                             <span> {el.title}</span>
                                             {el.icon}
                                         </Stack>
