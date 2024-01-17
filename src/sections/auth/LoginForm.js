@@ -7,8 +7,12 @@ import FormProvider from '../../components/hook-form/FormProvider'
 import { Alert, Button, IconButton, InputAdornment, Link, Stack } from '@mui/material'
 import RHFTextField from '../../components/hook-form/RHFTextField'
 import { Eye, EyeSlash } from 'phosphor-react'
+import { useDispatch } from 'react-redux'
+import { LoginUser } from '../../redux/slices/auth'
 
 const LoginForm = () => {
+
+    const dispatch = useDispatch()
 
     const [showPassword, setShowPassword] = useState(false)
 
@@ -18,7 +22,7 @@ const LoginForm = () => {
     });
 
     const defaultValues = {
-        email: "demo@tawk.com",
+        email: "demo@ChatterBox.com",
         password: "demo@1234"
     }
 
@@ -32,6 +36,8 @@ const LoginForm = () => {
     const onSubmit = async (data) => {
         try {
             // submit data to backend
+            dispatch(LoginUser(data))
+
         } catch (error) {
             console.log(error)
             reset();

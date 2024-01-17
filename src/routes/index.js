@@ -8,6 +8,7 @@ import DashboardLayout from "../layouts/dashboard";
 import { DEFAULT_PATH } from "../config";
 import LoadingScreen from "../components/LoadingScreen";
 import MainLayout from "../layouts/main";
+import Verify from "../pages/auth/Verify";
 
 const Loadable = (Component) => (props) => {
   return (
@@ -27,6 +28,7 @@ export default function Router() {
         { element: <RegisterPage />, path: "register" },
         { element: <ResetPasswordPage />, path: "reset-password" },
         { element: <NewPasswordPage />, path: "new-password" },
+        { element: <VerifyPage />, path: "verify" },
       ]
 
     },
@@ -55,6 +57,7 @@ const LoginPage = Loadable(lazy(() => import("../pages/auth/Login")));
 const RegisterPage = Loadable(lazy(() => import("../pages/auth/Register")));
 const ResetPasswordPage = Loadable(lazy(() => import("../pages/auth/ResetPassword")));
 const NewPasswordPage = Loadable(lazy(() => import("../pages/auth/NewPassword")));
+const VerifyPage = Loadable(lazy(() => import("../pages/auth/Verify")));
 
 const Settings = Loadable(lazy(() => import("../Settings")));
 const CallPage = Loadable(lazy(() => import("../pages/dashboard/Calls")));

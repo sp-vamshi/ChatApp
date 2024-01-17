@@ -8,7 +8,7 @@ const RegisterPage = () => {
     return (
         <Stack spacing={2} sx={{ mb: 5, position: "relative", }}>
             <Typography variant='h4' >
-                Get Started With Tawk
+                Get Started With ChatterBox
             </Typography>
             <Stack direction="row" spacing={.5} >
                 <Typography variant='body2'>Alread have an account?</Typography>

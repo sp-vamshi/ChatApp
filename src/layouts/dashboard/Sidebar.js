@@ -3,13 +3,15 @@ import { useTheme } from '@mui/material/styles'
 import { Gear } from 'phosphor-react'
 import React, { useState } from 'react'
 import { faker } from "@faker-js/faker";
+import { useDispatch } from "react-redux"
 
 import Logo from "../../assets/Images/logo.ico"
-import { Nav_Buttons } from '../../data'
+import { Nav_Buttons, Profile_Menu } from '../../data'
 import useSettings from "../../hooks/useSettings"
 import AntSwitch from '../../components/AntSwitch';
-import { Profile_Menu } from '../../data';
 import { useNavigate } from 'react-router-dom';
+import { LogoutUser } from '../../redux/slices/auth';
+
 
 const getPath = (index) => {
     switch (index) {
@@ -50,6 +52,8 @@ const Sidebar = () => {
 
     const navigate = useNavigate();
 
+    const dispatch = useDispatch()
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -68,7 +72,7 @@ const Sidebar = () => {
                         backgroundColor: theme.palette.primary.main,
                         height: 64, width: 64, borderRadius: 1.5
                     }}>
-                        <img src={Logo} alt="Chat app logo" />
+                        <img src={Logo} alt="ChatterBox logo" />
                     </Box>
                     <Stack spacing={3} sx={{ width: "max-content" }} direction={"column"} alignItems={"center"} >
                         {Nav_Buttons.map(el => (
@@ -139,7 +143,10 @@ const Sidebar = () => {
                             {Profile_Menu.map((el, ind) => {
                                 return (
                                     <MenuItem key={ind} onClick={handleClose}>
-                                        <Stack onClick={() => navigate(getMenuPath(ind))} sx={{ width: 100 }} direction={"row"} alignItems={"center"} justifyContent={"space-between"} >
+                                        <Stack onClick={() => {
+                                            ind === 2 ? dispatch(LogoutUser()) : navigate(getMenuPath(ind))
+                                        }
+                                        } sx={{ width: 100 }} direction={"row"} alignItems={"center"} justifyContent={"space-between"} >
                                             <span> {el.title}</span>
                                             {el.icon}
                                         </Stack>
@@ -149,8 +156,8 @@ const Sidebar = () => {
                         </Stack>
                     </Menu>
                 </Stack>
-            </Stack>
-        </Box>
+            </Stack >
+        </Box >
     )
 }
 
