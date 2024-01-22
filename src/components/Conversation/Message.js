@@ -7,30 +7,30 @@ export const Message = ({ menu }) => {
     return (
         <Box p={3}>
             <Stack spacing={3} >
-                {Chat_History.map(el => {
+                {Chat_History.map((el, index) => {
                     switch (el.type) {
                         case "divider":
                             //  Timeline
-                            return <Timeline el={el} />
+                            return <Timeline key={index} el={el} />
                         case "msg":
                             switch (el.subtype) {
                                 case "img":
                                     // img msg
-                                    return <MediaMsg menu={menu} el={el} />
+                                    return <MediaMsg key={index} menu={menu} el={el} />
                                 case "doc":
                                     // Doc msg
-                                    return <DocMsg menu={menu} el={el} />
+                                    return <DocMsg key={index} menu={menu} el={el} />
                                 case "link":
                                     // Link msg
-                                    return <LinkMsg menu={menu} el={el} />
+                                    return <LinkMsg key={index} menu={menu} el={el} />
 
                                 case "reply":
                                     // Reply msg
-                                    return <ReplyMsg menu={menu} el={el} />;
+                                    return <ReplyMsg key={index} menu={menu} el={el} />;
 
                                 default:
                                     // text msg
-                                    return <TextMsg menu={menu} el={el} />
+                                    return <TextMsg key={index} menu={menu} el={el} />
                             }
                         default:
                             return ""
