@@ -3,16 +3,23 @@ import { Box, Stack, Typography, Avatar, Badge } from '@mui/material'
 import { useTheme } from "@mui/material/styles"
 import ".././App.css"
 import StyledBadge from './StyledBade'
+import { useDispatch } from 'react-redux'
+import { SelectConversation } from '../redux/slices/app'
 
 const ChatElement = ({ id, name, img, msg, time, unread, online }) => {
     const theme = useTheme()
+    const dispatch = useDispatch();
 
     return (
-        <Box p={2} sx={{
-            width: "100%",
-            borderRadius: 1,
-            backgroundColor: theme.palette.mode === "light" ? "#fff" : theme.palette.background.paper
-        }}>
+        <Box
+            p={2}
+            sx={{
+                width: "100%",
+                borderRadius: 1,
+                backgroundColor: theme.palette.mode === "light" ? "#fff" : theme.palette.background.paper
+            }}
+            onClick={() => dispatch(SelectConversation({ room_id: id }))}
+        >
             <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
                 <Stack direction={"row"} spacing={2}>
                     {online ?

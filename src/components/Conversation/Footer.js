@@ -52,13 +52,13 @@ const ChatInput = ({ setOpenPicker }) => {
 
   return (<StyledInput fullWidth placeholder='Write a message...' variant='filled' InputProps={{
     disableUnderline: true,
-    startAdornment: <InputAdornment>
+    startAdornment: <InputAdornment position='end'>
       <Stack sx={{ width: "max-content" }}>
         <Stack sx={{ position: "relative", display: openAction ? "inline-block" : "none" }} >
           {Actions.map(el => {
             return (
               <Tooltip placement='right' key={el.y} title={el.title}>
-                <Fab sx={{ position: "absolute", top: -el.y, backgroundColor: el.colour }} color="primary" aria-label="add">
+                <Fab sx={{ position: "absolute", top: -el.y, backgroundColor: el.color }} color="primary" aria-label="add">
                   {el.icon}
                 </Fab>
               </Tooltip>
@@ -71,7 +71,7 @@ const ChatInput = ({ setOpenPicker }) => {
         </IconButton>
       </Stack>
     </InputAdornment>,
-    endAdornment: <InputAdornment>
+    endAdornment: <InputAdornment position='end'>
       <IconButton onClick={() => setOpenPicker((prev) => !prev)}>
         <Smiley />
       </IconButton>
