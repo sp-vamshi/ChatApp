@@ -126,7 +126,7 @@ export const Contact = () => {
                     </Stack>
                     <Stack direction={"row"} spacing={2} alignItems={"center"} >
                         {[1, 2, 3].map(el => (
-                            <Box>
+                            <Box key={el}>
                                 <img src={faker.image.food()} alt={faker.name.fullName()} />
                             </Box>
                         ))}

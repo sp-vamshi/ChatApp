@@ -13,6 +13,7 @@ import { Chat } from "phosphor-react";
 import { socket } from "../socket";
 
 import StyledBadge from "./StyledBade"
+import { useSelector } from 'react-redux';
 
 const StyledChatBox = styled(Box)(({ theme }) => ({
     "&:hover": {
@@ -20,11 +21,10 @@ const StyledChatBox = styled(Box)(({ theme }) => ({
     },
 }));
 
-const user_id = window.localStorage.getItem("user_id");
-
-
 const UserElement = ({ img, firstName, lastName, online, _id }) => {
     const theme = useTheme();
+
+    const { user_id } = useSelector(state => state.auth)
 
     const name = `${firstName} ${lastName}`;
 
@@ -111,6 +111,8 @@ const FriendRequestElement = ({ img, firstName, lastName, incoming, missed, onli
 
 const FriendElement = ({ img, firstName, lastName, incoming, missed, online, _id, }) => {
     const theme = useTheme();
+    const { user_id } = useSelector(state => state.auth)
+
     const name = `${firstName} ${lastName}`;
 
     return (
