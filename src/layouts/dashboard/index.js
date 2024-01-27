@@ -54,9 +54,9 @@ const DashboardLayout = () => {
 
       })
 
-      socket?.on("is_online", (data) => {
+      socket?.on("is_user_active", (data) => {
         const updatedConversationsList = conversations.map(each => {
-          if (each.user_id?.toString() === data?.user_id.toString()) return { ...each, online: true }
+          if (each.user_id?.toString() === data?.user_id.toString()) return { ...each, online: data?.status }
           else return each
         })
 
@@ -64,7 +64,7 @@ const DashboardLayout = () => {
 
 
         if (data?.user_id.toString() === current_conversation?.user_id) {
-          dispatch(UpdateCurrentConversation({ ...current_conversation, online: true }))
+          dispatch(UpdateCurrentConversation({ ...current_conversation, online: data?.status }))
         }
       })
 
@@ -72,7 +72,6 @@ const DashboardLayout = () => {
         const message = data.message;
         // check if msg we got is from currently selected conversation
         if (current_conversation?.id?.toString() === data?.conversation_id?.toString()) {
-          console.log("inside new_message condition")
           dispatch(
             AddDirectMessage({
               id: message._id,
