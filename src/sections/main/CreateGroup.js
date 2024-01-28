@@ -34,10 +34,8 @@ const CreateGroupForm = ({ handleClose }) => {
 
     const onSubmit = async (data) => {
         try {
-            console.log("Group Data", data)
 
         } catch (error) {
-            console.log(error)
         }
     }
 

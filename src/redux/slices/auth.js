@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import axios from "../../utils/axios";
 import { showSnackBar } from "./app";
+import { slice as ConversationSlice } from "./conversation"
+import { slice as AppSlice } from "./app"
 
 const initialState = {
     isLoggedIn: false,
@@ -9,6 +11,7 @@ const initialState = {
     token: "",
     email: "",
     error: false,
+    user_id: null,
 }
 
 const slice = createSlice({
@@ -22,10 +25,10 @@ const slice = createSlice({
         logIn(state, action) {
             state.isLoggedIn = action.payload.isLoggedIn;
             state.token = action.payload.token;
+            state.user_id = action.payload.user_id
         },
         signOut(state, action) {
-            state.isLoggedIn = false;
-            state.token = "";
+            return initialState
         },
         updateRegisterEmail(state, action) {
             state.email = action.payload.email
@@ -47,15 +50,15 @@ export function LoginUser(formValues) {
         }).then(function (response) {
             dispatch(slice.actions.logIn({
                 isLoggedIn: true,
-                token: response.data?.token
+                token: response.data?.token,
+                user_id: response.data?.user_id
             }))
 
-            window.localStorage.setItem("user_id", response.data.user_id);
-
+            window.localStorage.setItem("user_id", response.data?.user_id)
             dispatch(showSnackBar({ severity: "success", message: response.data.message }))
 
         }).catch(function (error) {
-            dispatch(showSnackBar({ severity: "error", message: error.message }))
+            dispatch(showSnackBar({ severity: "error", message: error.response.data.message }))
 
         })
     }
@@ -64,9 +67,9 @@ export function LoginUser(formValues) {
 
 export function LogoutUser() {
     return (dispatch, getState) => {
-        window.localStorage.removeItem("user_id");
         dispatch(slice.actions.signOut())
-
+        dispatch(ConversationSlice.actions.onSignOut())
+        dispatch(AppSlice.actions.onSignOut())
     }
 }
 
@@ -147,11 +150,11 @@ export function VerifyEmail(formValues) {
 
                 dispatch(slice.actions.logIn({
                     isLoggedIn: true,
-                    token: response.data.token
+                    token: response.data.token,
+                    user_id: response.data.user_id
                 }))
 
-                window.localStorage.setItem("user_id", response.data.user_id);
-
+                window.localStorage.setItem("user_id", response.data?.user_id)
                 dispatch(showSnackBar({ severity: "success", message: response.data.message }));
 
             }).catch((error) => {

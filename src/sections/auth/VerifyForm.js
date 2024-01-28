@@ -50,7 +50,6 @@ const VerifyForm = () => {
                 otp: `${data.code1}${data.code2}${data.code3}${data.code4}${data.code5}${data.code6}`
             }))
         } catch (error) {
-            console.log(error)
         }
     }
 

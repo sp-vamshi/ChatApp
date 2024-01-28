@@ -13,7 +13,6 @@ import { ResetPassword } from '../../redux/slices/auth'
 
 const NewPasswordForm = () => {
     const [queryParameters] = useSearchParams()
-    console.log(queryParameters.get("token"))
     const dispatch = useDispatch()
 
     const [showPassword, setShowPassword] = useState(false)
@@ -40,7 +39,6 @@ const NewPasswordForm = () => {
             // submit data to backend
             dispatch(ResetPassword({ ...data, token: queryParameters.get("token") }))
         } catch (error) {
-            console.log(error)
             reset();
             setError("afterSubmit", {
                 ...error,

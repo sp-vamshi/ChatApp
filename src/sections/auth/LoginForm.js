@@ -23,7 +23,7 @@ const LoginForm = () => {
 
     const defaultValues = {
         email: "demo@ChatterBox.com",
-        password: "demo@1234"
+        password: "123456"
     }
 
     const methods = useForm({
@@ -39,7 +39,6 @@ const LoginForm = () => {
             dispatch(LoginUser(data))
 
         } catch (error) {
-            console.log(error)
             reset();
             setError("afterSubmit", {
                 ...error,

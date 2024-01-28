@@ -32,7 +32,6 @@ const ResetPasswordForm = () => {
             // submit data to backend
             dispatch(ForgotPassword(data))
         } catch (error) {
-            console.log(error)
             reset();
             setError("afterSubmit", {
                 ...error,

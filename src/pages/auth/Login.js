@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link as RouterLink } from "react-router-dom"
 import { Link, Stack, Typography } from '@mui/material'
 import AuthSocial from '../../sections/auth/AuthSocial'
 import LoginForm from '../../sections/auth/LoginForm'
 
+
 const Login = () => {
+
+    useEffect(() => {
+        window.localStorage.removeItem("user_id")
+    }, [])
+
     return (
         <Stack spacing={2} sx={{ mb: 5, position: "relative", }}>
             <Typography variant="h4">Login to ChatterBox</Typography>

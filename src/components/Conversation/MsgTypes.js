@@ -31,7 +31,7 @@ const DocMsg = ({ el, menu }) => {
                 </Stack>
             </Stack>
         </Box>
-        {menu && <MessageOptions />}
+        {/* {menu && <MessageOptions />} */}
     </Stack>
     )
 }
@@ -61,7 +61,7 @@ const LinkMsg = ({ el, menu }) => {
                     </Stack>
                 </Stack>
             </Box>
-            {menu && <MessageOptions />}
+            {/* {menu && <MessageOptions />} */}
         </Stack>
     )
 }
@@ -90,7 +90,7 @@ const ReplyMsg = ({ el, menu }) => {
                     <Typography variant='body' color={el.incoming ? theme.palette.text : "#fff"}>{el.reply}</Typography>
                 </Stack>
             </Box >
-            {menu && <MessageOptions />}
+            {/* {menu && <MessageOptions />} */}
         </Stack >
     )
 }
@@ -114,7 +114,7 @@ const MediaMsg = ({ el, menu }) => {
                     </Typography>
                 </Stack>
             </Box>
-            {menu && <MessageOptions />}
+            {/* {menu && <MessageOptions />} */}
         </Stack>
 
     )
@@ -135,7 +135,7 @@ const TextMsg = ({ el, menu }) => {
                 {el.message}
             </Typography>
         </Box>
-        {menu && <MessageOptions />}
+        {/* {menu && <MessageOptions />} */}
     </Stack>
 }
 

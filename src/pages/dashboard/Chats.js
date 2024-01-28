@@ -12,20 +12,22 @@ import { socket } from '../../socket';
 import { useSelector, useDispatch } from 'react-redux';
 import { FetchDirectConversations } from '../../redux/slices/conversation';
 
-const user_id = window.localStorage.getItem("user_id");
 
 export const Chats = () => {
     const [openDialog, setOpenDialog] = useState(false)
     const theme = useTheme();
     const dispatch = useDispatch();
 
+    const { user_id } = useSelector(state => state.auth)
+
     const { conversations } = useSelector(state => state.conversations.direct_chat)
 
-
     useEffect(() => {
-        socket.emit("get_direct_conversations", { user_id }, (data) => {
+        socket?.emit("get_direct_conversations", { user_id }, (data) => {
+            console.log(data)
             //  data => list of conversations
-            dispatch(FetchDirectConversations({ conversation: data }));
+            console.log(user_id)
+            dispatch(FetchDirectConversations({ conversations: data, user_id: user_id }));
         })
     }, [])
 
@@ -65,24 +67,13 @@ export const Chats = () => {
                             <StyledInputBase inputProps={{ "aria-label": "search" }} placeholder='Search' />
                         </Search>
                     </Stack>
-                    <Stack spacing={1}>
-                        <Stack direction={"row"} alignItems={"center"} spacing={1.5} >
-                            <ArchiveBox size={24} />
-                            <Button>Archive</Button>
-                        </Stack>
-                        <Divider />
-                    </Stack>
+
                     <Stack spacing={2} direction={"column"} sx={{ flexGrow: 1, overflowY: "scroll", height: "100%", }} >
                         <SimpleBarStyle timeout={500} clickOnTrack={false}>
-                            {/* <Stack spacing={2.4}>
-                                <Typography variant='subtitle2' sx={{ color: "#676767" }}>Pinned</Typography>
-                                {ChatList.filter(el => el.pinned).map(el => {
-                                    return <ChatElement key={el.id} {...el} />
-                                })}
-                            </Stack> */}
+
                             <Stack pt={1} spacing={2.4}>
                                 <Typography variant='subtitle2' sx={{ color: "#676767" }}>All Chats</Typography>
-                                {conversations.filter(el => !el.pinned).map(el => {
+                                {conversations.map(el => {
                                     return <ChatElement key={el.id} {...el} />
                                 })}
                             </Stack>
