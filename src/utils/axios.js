@@ -5,7 +5,7 @@ import { BASE_URL } from "../config";
 // BASE_URL http://localhost:3001
 
 const axiosInstance = axios.create({ baseURL: BASE_URL, withCredentials: true,headers:{
-    Accept:"application/json"
+    Accept:"application/json"}
 })
 
 axios.interceptors.response.use(
