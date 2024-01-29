@@ -50,15 +50,15 @@ export function LoginUser(formValues) {
         }).then(function (response) {
             dispatch(slice.actions.logIn({
                 isLoggedIn: true,
-                token: response.data?.token,
-                user_id: response.data?.user_id
+                token: response?.data?.token,
+                user_id: response?.data?.user_id
             }))
 
-            window.localStorage.setItem("user_id", response.data?.user_id)
-            dispatch(showSnackBar({ severity: "success", message: response.data.message }))
+            window.localStorage.setItem("user_id", response?.data?.user_id)
+            dispatch(showSnackBar({ severity: "success", message: response?.data?.message }))
 
         }).catch(function (error) {
-            dispatch(showSnackBar({ severity: "error", message: error.response.data.message }))
+            dispatch(showSnackBar({ severity: "error", message: error?.response?.data?.message }))
 
         })
     }
@@ -84,10 +84,10 @@ export function ForgotPassword(formValues) {
             }
         }).then((response) => {
             dispatch(
-                showSnackBar({ severity: "success", message: response.data.message })
+                showSnackBar({ severity: "success", message: response?.data?.message })
             );
         }).catch((error) => {
-            dispatch(showSnackBar({ severity: "error", message: error.message }));
+            dispatch(showSnackBar({ severity: "error", message: error?.message }));
         })
     }
 }
@@ -101,13 +101,13 @@ export function ResetPassword(formValues) {
         }).then((response) => {
             dispatch(slice.actions.logIn({
                 isLoggedIn: true,
-                token: response.data?.token
+                token: response?.data?.token
             }))
             dispatch(
-                showSnackBar({ severity: "success", message: response.data.message })
+                showSnackBar({ severity: "success", message: response?.data?.message })
             );
         }).catch(error => {
-            dispatch(showSnackBar({ severity: "error", message: error.message }));
+            dispatch(showSnackBar({ severity: "error", message: error?.message }));
         })
     }
 }
@@ -124,14 +124,14 @@ export function RegisterUser(formValues) {
                 "Content-Type": "application/json"
             }
         }).then((response) => {
-            dispatch(showSnackBar({ severity: "success", message: response.data.message }));
+            dispatch(showSnackBar({ severity: "success", message: response?.data?.message }));
 
             dispatch(slice.actions.updateRegisterEmail({ email: formValues.email }))
 
             dispatch(slice.actions.updateIsLoading({ isLoading: false, error: false }))
 
         }).catch((error) => {
-            dispatch(showSnackBar({ severity: "error", message: error.message }));
+            dispatch(showSnackBar({ severity: "error", message: error?.message }));
             dispatch(slice.actions.updateIsLoading({ isLoading: false, error: true }))
         }).finally(() => {
             if (!getState().auth.error) {
@@ -150,15 +150,15 @@ export function VerifyEmail(formValues) {
 
                 dispatch(slice.actions.logIn({
                     isLoggedIn: true,
-                    token: response.data.token,
-                    user_id: response.data.user_id
+                    token: response?.data?.token,
+                    user_id: response?.data?.user_id
                 }))
 
-                window.localStorage.setItem("user_id", response.data?.user_id)
-                dispatch(showSnackBar({ severity: "success", message: response.data.message }));
+                window.localStorage.setItem("user_id", response?.data?.user_id)
+                dispatch(showSnackBar({ severity: "success", message: response?.data?.message }));
 
             }).catch((error) => {
-                dispatch(showSnackBar({ severity: "error", message: error.message }));
+                dispatch(showSnackBar({ severity: "error", message: error?.message }));
             })
     }
 }
