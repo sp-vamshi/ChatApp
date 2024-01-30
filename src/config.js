@@ -4,8 +4,7 @@ import { enUS, frFR, zhCN, viVN, arSD } from '@mui/material/locale';
 // routes
 import { PATH_DASHBOARD } from "./routes/paths";
 
-// export const BASE_URL = "http://localhost:3001"
-export const BASE_URL = "https://chatterbox-v1.onrender.com/"
+export const BASE_URL = process.env.REACT_APP_BASE_URL
 
 
 export const defaultSettings = {
