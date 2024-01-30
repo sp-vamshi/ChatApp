@@ -24,9 +24,7 @@ export const Chats = () => {
 
     useEffect(() => {
         socket?.emit("get_direct_conversations", { user_id }, (data) => {
-            console.log(data)
             //  data => list of conversations
-            console.log(user_id)
             dispatch(FetchDirectConversations({ conversations: data, user_id: user_id }));
         })
     }, [])
