@@ -5,7 +5,6 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../../firebase";
 import { useDispatch } from "react-redux";
 import { SigninWithGoogle } from "../../redux/slices/auth";
-import { BASE_URL } from "../../config";
 import { showSnackBar } from "../../redux/slices/app";
 
 const GoogleAuthBtn = () => {
@@ -16,7 +15,7 @@ const GoogleAuthBtn = () => {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
-      const res = await fetch(`${BASE_URL}/auth/sign-in-with-google`, {
+      const res = await fetch(`${process.env.REACT_APP_BASE_URL}/auth/sign-in-with-google`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
