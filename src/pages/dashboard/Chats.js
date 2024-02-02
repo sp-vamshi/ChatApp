@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { Box, IconButton, Stack, Typography, InputBase, Button, Divider, Avatar, Badge } from '@mui/material'
-import { ArchiveBox, CircleDashed, MagnifyingGlass, Users } from 'phosphor-react'
+import { MagnifyingGlass, Users } from 'phosphor-react'
 import { useTheme } from "@mui/material/styles"
 import { SimpleBarStyle } from "../../components/Scrollbar";
 import "../../App.css"
-import { ChatList } from "../../data"
 import { Search, SearchIconWrapper, StyledInputBase } from "../../components/Search/index"
 import ChatElement from '../../components/ChatElement';
 import Friends from '../../sections/main/Friends';
 import { socket } from '../../socket';
 import { useSelector, useDispatch } from 'react-redux';
 import { FetchDirectConversations } from '../../redux/slices/conversation';
+import useDevice from '../../utils/useDevice';
 
 
 export const Chats = () => {
     const [openDialog, setOpenDialog] = useState(false)
     const theme = useTheme();
     const dispatch = useDispatch();
+    const [device] = useDevice()
 
     const { user_id } = useSelector(state => state.auth)
 
-    const { conversations } = useSelector(state => state.conversations.direct_chat)
+    const { conversations, current_conversation } = useSelector(state => state.conversations.direct_chat)
+    const currentConversationId = current_conversation?.id
 
     useEffect(() => {
         socket?.emit("get_direct_conversations", { user_id }, (data) => {
@@ -38,23 +40,20 @@ export const Chats = () => {
 
     return (
         <>
-
             <Box sx={{
-                position: "relative", height: "100vh", width: 320, boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
-                backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper,
+                position: "relative", height: device.Desktop ? "100vh" : "calc(100vh - 70px)", width: device.Desktop ? 320 : "100%", boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
+                backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background,
             }} >
-                <Stack p={3} spacing={2} sx={{ height: "100vh" }} >
+                <Stack p={3} spacing={2} sx={{ height: "100%", width: device.Mobile ? "100vw" : "100%", }} >
                     <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"}>
                         <Typography variant='h5'>
-                            Chats
+                            {device.Desktop ? "Chats" : "ChatterBox"}
                         </Typography>
                         <Stack direction="row" alignItems={"center"} spacing={1}>
                             <IconButton onClick={handleOpenDialog} >
                                 <Users />
                             </IconButton>
-                            <IconButton >
-                                <CircleDashed />
-                            </IconButton>
+
                         </Stack>
                     </Stack>
                     <Stack sx={{ width: "100%" }}>
@@ -72,7 +71,7 @@ export const Chats = () => {
                             <Stack pt={1} spacing={2.4}>
                                 <Typography variant='subtitle2' sx={{ color: "#676767" }}>All Chats</Typography>
                                 {conversations.map(el => {
-                                    return <ChatElement key={el.id} {...el} />
+                                    return <ChatElement key={el.id} {...el} currentConversationId={currentConversationId} />
                                 })}
                             </Stack>
                         </SimpleBarStyle>

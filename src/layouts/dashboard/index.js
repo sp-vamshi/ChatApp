@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { connectSocket, socket } from "../../socket";
 import { SelectConversation, showSnackBar } from "../../redux/slices/app";
 import { AddDirectConversation, AddDirectMessage, UpdateDirectConversation, UpdateConversationsList, UpdateCurrentConversation } from "../../redux/slices/conversation";
+import useDevice from "../../utils/useDevice";
+import FooterNavbar from "./FooterNavbar";
 
 
 const DashboardLayout = () => {
-
+  const [device] = useDevice()
   const dispatch = useDispatch();
 
   const { isLoggedIn, user_id } = useSelector((state) => state.auth)
@@ -50,7 +52,7 @@ const DashboardLayout = () => {
           // add direct conversation
           dispatch(AddDirectConversation({ conversation: data, user_id }));
         }
-        dispatch(SelectConversation({ room_id: data._id }));
+        dispatch(SelectConversation({ room_id: data._id, chat_type: "individual" }));
 
       })
 
@@ -87,13 +89,12 @@ const DashboardLayout = () => {
 
     }
 
-    const unloadCallback = () => {
+    function unloadCallback() {
       if (!isLoggedIn) {
         const user_id = window.localStorage.getItem("user_id");
         socket?.emit("end", { user_id })
       }
     }
-
 
     return () => {
       socket?.off("new_friend_request");
@@ -110,14 +111,21 @@ const DashboardLayout = () => {
     return <Navigate to="/auth/login" />
   }
 
-
-
   return (
-    <Stack direction={"row"}>
-      {/* SideBar */}
-      <Sidebar />
-
-      <Outlet />
+    <Stack direction={device.Mobile ? "column" : "row"}>
+      {(() => {
+        if (device.Mobile) {
+          return <>
+            <Outlet />
+            {current_conversation === null && <FooterNavbar />}
+          </>
+        } else {
+          return <>
+            <Sidebar />
+            <Outlet />
+          </>
+        }
+      })()}
     </Stack >
   );
 };

@@ -6,9 +6,11 @@ import { MagnifyingGlass, Plus } from 'phosphor-react'
 import { CallLogElement } from '../../components/CallElement'
 import { CallLogs } from '../../data'
 import StartCall from '../../sections/main/StartCall'
+import useDevice from '../../utils/useDevice'
 
 const Calls = () => {
     const [openDialog, setOpenDialog] = useState(false)
+    const [device] = useDevice()
 
     const handleCloseDialog = () => {
         setOpenDialog(false)
@@ -22,10 +24,10 @@ const Calls = () => {
                 {/* Left */}
                 <Box
                     sx={{
-                        height: '100vh', width: 320, boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
+                        height: 'calc(100vh - 70px)', width: device.Desktop ? 320 : "100%", boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
                         backgroundColor: (theme) => theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background
                     }}>
-                    <Stack p={3} spacing={2} sx={{ maxHeight: "100vh" }}>
+                    <Stack p={3} spacing={2} sx={{ maxHeight: "100%" }}>
                         <Stack >
                             <Typography variant='h5'>Call Logs</Typography>
                         </Stack>
