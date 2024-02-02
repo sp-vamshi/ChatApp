@@ -16,6 +16,7 @@ const initialState = {
     friendRequests: [],
     chat_type: null,
     room_id: null,
+    selectedTab: 0
 }
 
 export const slice = createSlice({
@@ -23,7 +24,7 @@ export const slice = createSlice({
     initialState,
     reducers: {
         toggleSideBar(state, action) {
-            state.sidebar.open = !state.sidebar.open
+            state.sidebar.open = action.payload
         },
         UpdateSideBarType(state, action) {
             state.sidebar.type = action.payload.type;
@@ -48,17 +49,26 @@ export const slice = createSlice({
             state.friendRequests = action.payload.request;
         },
         selectConversation(state, action) {
-            state.chat_type = 'individual';
+            state.chat_type = action.payload.chat_type;
             state.room_id = action.payload.room_id
         },
         onSignOut(state, action) {
             return initialState
         },
+        changeTab(state, action) {
+            state.selectedTab = action.payload.tabNumber
+        }
 
     }
 })
 
 export default slice.reducer;
+
+export const ChangeTab = ({ tabNumber }) => {
+    return (dispatch, getState) => {
+        dispatch(slice.actions.changeTab({ tabNumber }))
+    }
+}
 
 export const ClearApp = () => {
     return (dispatch, getState) => {
@@ -66,9 +76,9 @@ export const ClearApp = () => {
     }
 }
 
-export function ToggleSideBar() {
+export function ToggleSideBar(isOpen) {
     return async (dispatch, getState) => {
-        dispatch(slice.actions.toggleSideBar())
+        dispatch(slice.actions.toggleSideBar(isOpen))
     }
 }
 
@@ -153,8 +163,8 @@ export const FetchFriendRequests = () => {
     }
 }
 
-export const SelectConversation = ({ room_id }) => {
+export const SelectConversation = ({ room_id, chat_type }) => {
     return (dispatch, getState) => {
-        dispatch(slice.actions.selectConversation({ room_id }))
+        dispatch(slice.actions.selectConversation({ room_id, chat_type }))
     }
 }

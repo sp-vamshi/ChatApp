@@ -10,6 +10,7 @@ import { ToggleSideBar, UpdateSideBarType } from '../redux/slices/app'
 import { faker } from '@faker-js/faker'
 import AntSwitch from "./AntSwitch"
 import Slide from '@mui/material/Slide';
+import useDevice from '../utils/useDevice'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -60,6 +61,7 @@ const DeleteDialog = ({ open, handleClose }) => {
 export const Contact = () => {
     const theme = useTheme()
     const dispatch = useDispatch()
+    const [device] = useDevice()
 
     const [openBlock, setOpenBlock] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
@@ -73,7 +75,7 @@ export const Contact = () => {
     }
 
     return (
-        <Box sx={{ width: 320, height: "100vh" }} >
+        <Box sx={{ width: device.Desktop ? 320 : "100%", height: "100vh" }} >
             <Stack sx={{ height: "100%" }} >
                 <Box sx={{
                     boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
@@ -82,7 +84,7 @@ export const Contact = () => {
                 }}>
                     <Stack direction={"row"} alignItems={"center"} justifyContent={"space-between"} spacing={2} sx={{ height: "100%", p: 2 }}>
                         <Typography variant='subtitle2'>Contact Info</Typography>
-                        <IconButton onClick={() => dispatch(ToggleSideBar())} ><X /></IconButton>
+                        <IconButton onClick={() => dispatch(ToggleSideBar(false))} ><X /></IconButton>
                     </Stack>
                 </Box>
                 {/* Body */}

@@ -4,21 +4,29 @@ import { useTheme } from "@mui/material/styles"
 import ".././App.css"
 import StyledBadge from './StyledBade'
 import { useDispatch } from 'react-redux'
-import { SelectConversation } from '../redux/slices/app'
+import { SelectConversation, ToggleSideBar } from '../redux/slices/app'
 
-const ChatElement = ({ id, name, img, msg, time, unread, online }) => {
+const ChatElement = ({ id, name, img, msg, time, unread, online, currentConversationId }) => {
     const theme = useTheme()
     const dispatch = useDispatch();
+
+    function onSelectConversation() {
+        dispatch(SelectConversation({ room_id: id, chat_type: "individual" }))
+        dispatch(ToggleSideBar(false))
+    }
 
     return (
         <Box
             p={2}
             sx={{
                 width: "100%",
-                borderRadius: 1,
-                backgroundColor: theme.palette.mode === "light" ? "#fff" : theme.palette.background.paper
+                borderRadius: 1.5,
+                color: currentConversationId === id ? "#fff" : "",
+                cursor: "pointer",
+                backgroundColor: currentConversationId === id ? theme.palette.primary.main : theme.palette.mode === "light" ? "#fff" : theme.palette.background.paper,
+                transition: "all 0.4s",
             }}
-            onClick={() => dispatch(SelectConversation({ room_id: id }))}
+            onClick={onSelectConversation}
         >
             <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
                 <Stack direction={"row"} spacing={2}>

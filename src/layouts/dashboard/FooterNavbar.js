@@ -44,7 +44,7 @@ const getMenuPath = (index) => {
     }
 }
 
-const Sidebar = () => {
+const FooterNavbar = () => {
     const dispatch = useDispatch()
     const { selectedTab } = useSelector(state => state.app)
 
@@ -65,55 +65,41 @@ const Sidebar = () => {
     };
 
     return (
-        <Box sx={{ backgroundColor: theme.palette.background.paper, padding: 2, boxShadow: "0px 0px 2px rgba(0,0,0,0.25)", height: "100vh", width: 100 }}>
-            <Stack direction={"column"} justifyContent={"space-between"} alignItems={"center"} sx={{ width: "100%", height: "100%" }} spacing={3}>
-                <Stack alignItems={"center"} spacing={4}>
-                    <Box sx={{
-                        backgroundColor: theme.palette.primary.main,
-                        height: 64, width: 64, borderRadius: 1.5
-                    }}>
-                        <img src={Logo} alt="ChatterBox logo" />
-                    </Box>
-                    <Stack spacing={3} sx={{ width: "max-content" }} direction={"column"} alignItems={"center"} >
-                        {Nav_Buttons.map(el => (
-                            el.index === selectedTab ?
-                                (<Box p={1} key={el.index} sx={{ backgroundColor: theme.palette.primary.main, borderRadius: 1.5 }}>
-                                    <IconButton sx={{ width: "max-content", color: "#fff" }} >
-                                        {el.icon}
-                                    </IconButton>
-                                </Box>)
-                                :
-                                (
-                                    <IconButton
-                                        onClick={() => {
-                                            dispatch(ChangeTab({ tabNumber: el.index }))
-                                            navigate(getPath(el.index))
-                                        }}
-                                        key={el.index}
-                                        sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }} >
-                                        {el.icon}
-                                    </IconButton>
-                                )
-                        ))}
-                        <Divider sx={{ width: "48px" }} />
-                        {selectedTab === 3 ?
-                            <Box p={1} sx={{ backgroundColor: theme.palette.primary.main, borderRadius: 1.5 }}>
-                                <IconButton sx={{ width: "max-content", color: "#fff" }}>
-                                    <Gear />
+        <Box sx={{ zIndex: 1, transition: "all 0.2s", position: "absolute", bottom: 0, backgroundColor: theme.palette.background.paper, padding: 2, boxShadow: "0px 0px 2px rgba(0,0,0,0.25)", height: "70px", width: "100%" }}>
+            <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"} sx={{ width: "100%", height: "100%" }} spacing={3}>
+                <Stack direction={"row"} sx={{ width: "100%" }} justifyContent={"space-around"} alignItems={"center"} spacing={3}>
+                    {Nav_Buttons.map(el => (
+                        el.index === selectedTab ?
+                            (<Box p={1} key={el.index} sx={{ backgroundColor: theme.palette.primary.main, borderRadius: 1.5 }}>
+                                <IconButton sx={{ width: "max-content", color: "#fff" }} >
+                                    {el.icon}
                                 </IconButton>
-                            </Box> : <IconButton
-                                sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }}
-                                onClick={() => {
-                                    dispatch(ChangeTab({ tabNumber: 3 }))
-                                    navigate(getPath(3))
-                                }}> <Gear /> </IconButton>
-                        }
-                    </Stack>
-                </Stack>
-                <Stack spacing={4}>
-                    <AntSwitch defaultChecked onChange={() => {
-                        onToggleMode()
-                    }} />
+                            </Box>)
+                            :
+                            (
+                                <IconButton
+                                    onClick={() => {
+                                        dispatch(ChangeTab({ tabNumber: el.index }))
+                                        navigate(getPath(el.index))
+                                    }}
+                                    key={el.index}
+                                    sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }} >
+                                    {el.icon}
+                                </IconButton>
+                            )
+                    ))}
+                    {selectedTab === 3 ?
+                        <Box p={1} sx={{ backgroundColor: theme.palette.primary.main, borderRadius: 1.5 }}>
+                            <IconButton sx={{ width: "max-content", color: "#fff" }}>
+                                <Gear />
+                            </IconButton>
+                        </Box> : <IconButton
+                            sx={{ width: "max-content", color: theme.palette.mode === "light" ? "#000" : theme.palette.text.primary }}
+                            onClick={() => {
+                                dispatch(ChangeTab({ tabNumber: 3 }))
+                                navigate(getPath(3))
+                            }}> <Gear /> </IconButton>
+                    }
                     <Avatar id="basic-button"
                         aria-controls={open ? 'basic-menu' : undefined}
                         aria-haspopup="true"
@@ -161,4 +147,4 @@ const Sidebar = () => {
     )
 }
 
-export default Sidebar
+export default FooterNavbar

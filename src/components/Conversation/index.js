@@ -12,10 +12,12 @@ import {
 } from "../../redux/slices/conversation";
 
 import { socket } from "../../socket"
+import useDevice from '../../utils/useDevice';
 
 export const Conversation = () => {
     const theme = useTheme();
     const dispatch = useDispatch();
+    const [device] = useDevice()
 
     const { user_id } = useSelector(state => state.auth)
 
@@ -43,7 +45,7 @@ export const Conversation = () => {
     }, [current_messages]);
 
     return (
-        <Stack height={"100%"} maxHeight={"100vh"} width={"auto"} >
+        <Stack sx={{ transition: "all 1s", }} minHeight={"100vh"} maxHeight={"100vh"} width={device.Desktop ? "auto" : "100vw"} >
             {/* Chat Header */}
             <ChatHeader />
 
@@ -54,13 +56,10 @@ export const Conversation = () => {
                 sx={{
                     position: "relative",
                     flexGrow: 1,
-                    overflow: "scroll",
-                    backgroundColor:
-                        theme.palette.mode === "light"
-                            ? "#F0F4FA"
-                            : theme.palette.background,
-
+                    overflow: "auto",
+                    backgroundColor: theme.palette.mode === "light" ? "#F0F4FA" : theme.palette.background,
                     boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
+                    transition: "all 0.1s",
                 }}
             >
                 <Message currentMessages={current_messages} menu={true} />

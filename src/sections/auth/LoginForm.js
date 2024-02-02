@@ -4,17 +4,19 @@ import * as Yup from "yup"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import FormProvider from '../../components/hook-form/FormProvider'
-import { Alert, Button, IconButton, InputAdornment, Link, Stack } from '@mui/material'
+import { Alert, Button, CircularProgress, IconButton, InputAdornment, Link, Stack, Typography } from '@mui/material'
 import RHFTextField from '../../components/hook-form/RHFTextField'
 import { Eye, EyeSlash } from 'phosphor-react'
-import { useDispatch } from 'react-redux'
-import { LoginUser } from '../../redux/slices/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { LoginUser, ToggleLoader } from '../../redux/slices/auth'
 
 const LoginForm = () => {
 
     const dispatch = useDispatch()
 
     const [showPassword, setShowPassword] = useState(false)
+
+    const { isLoading } = useSelector(state => state.auth)
 
     const LoginSchema = Yup.object().shape({
         email: Yup.string().required("Email is required").email("Email must be a valid email address"),
@@ -37,6 +39,7 @@ const LoginForm = () => {
         try {
             // submit data to backend
             dispatch(LoginUser(data))
+            dispatch(ToggleLoader(true))
 
         } catch (error) {
             reset();
@@ -68,7 +71,7 @@ const LoginForm = () => {
                 <Stack alignItems={"flex-end"} sx={{ my: 2 }}>
                     <Link component={RouterLink} to='/auth/reset-password' variant='body2' color={'inherit'} underline='always'>Forgot Password?</Link>
                 </Stack>
-                <Button fullWidth color="inherit" size='large' type='submit' variant='contained'
+                <Button disabled={isLoading} style={{ position: "relative" }} fullWidth color="inherit" size='large' type='submit' variant='contained'
                     sx={{
                         bgcolor: "text.primary", color: (theme) => theme.palette.mode === "light" ? "common.white" : "grey.800",
                         '&:hover': {
@@ -76,7 +79,13 @@ const LoginForm = () => {
                             color: (theme) => theme.palette.mode === "light" ? "common.white" : "grey.800"
                         }
                     }}>
-                    Login
+                    {isLoading && <CircularProgress
+                        sx={{ position: "absolute", }}
+                        color="primary"
+                        fourColor={true}
+                        variant="indeterminate"
+                    />}
+                    <Typography sx={{ position: "absolute", }} textAlign={"center"}>Login</Typography>
                 </Button>
             </FormProvider>
         </div>
