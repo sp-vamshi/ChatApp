@@ -4,7 +4,6 @@ import { Link, Stack, Typography } from '@mui/material'
 import AuthSocial from '../../sections/auth/AuthSocial'
 import LoginForm from '../../sections/auth/LoginForm'
 
-
 const Login = () => {
 
     useEffect(() => {

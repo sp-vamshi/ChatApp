@@ -123,13 +123,15 @@ const MediaMsg = ({ el, menu }) => {
 const TextMsg = ({ el, menu }) => {
     const theme = useTheme();
 
-    return <Stack direction={"row"} justifyContent={el.incoming ? "start" : "end"} >
+    return <Stack sx={{ transition: "all 0.1s", transitionTimingFunction: "ease-in" }} direction={"row"} justifyContent={el.incoming ? "start" : "end"} >
         <Box
             p={1.5}
             sx={{
-                backgroundColor: el.incoming ? theme.palette.background.default : theme.palette.primary.main,
+                backgroundColor: el.incoming ? theme.palette.background.neutral : theme.palette.primary.main,
                 borderRadius: 1.5,
                 width: "max-content",
+                boxShadow: "0 0 22px #ccc"
+
             }} >
             <Typography variant='body2' color={el.incoming ? theme.palette.text : "#fff"}>
                 {el.message}

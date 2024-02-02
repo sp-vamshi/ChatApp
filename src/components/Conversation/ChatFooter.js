@@ -113,19 +113,13 @@ const ChatInput = ({ openPicker, setOpenPicker, setValue, value, inputRef, sendM
 export const ChatFooter = () => {
   const theme = useTheme();
 
-  const { current_conversation } = useSelector(
-    (state) => state.conversations.direct_chat
-  );
-
-  const { user_id } = useSelector(state => state.auth)
-
-
-  const { room_id } = useSelector((state) => state.app);
+  const { current_conversation } = useSelector((state) => state.conversations.direct_chat);
 
   const [openPicker, setOpenPicker] = useState(false);
-
   const [value, setValue] = useState("");
 
+  const { user_id } = useSelector(state => state.auth)
+  const { room_id } = useSelector((state) => state.app);
   const inputRef = useRef(null);
 
   function handleEmojiClick(emoji) {
@@ -159,7 +153,7 @@ export const ChatFooter = () => {
   }
 
   return (
-    <Box p={2} sx={{ width: "100%", backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper, boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)" }}>
+    <Box p={2} sx={{ postion: "fixed", bottom: 0, marginTop: "auto", width: "100%", backgroundColor: theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background.paper, boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)" }}>
       <Stack direction={"row"} alignItems={"center"} spacing={3}>
         {/* Chat Input */}
         <Stack sx={{ width: "100%" }}>

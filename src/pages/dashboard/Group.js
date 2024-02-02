@@ -6,9 +6,11 @@ import { MagnifyingGlass, Plus } from 'phosphor-react'
 import { ChatList } from '../../data'
 import ChatElement from '../../components/ChatElement'
 import CreateGroup from '../../sections/main/CreateGroup'
+import useDevice from '../../utils/useDevice'
 
 const Group = () => {
     const [openDialog, setOpenDialog] = useState(false)
+    const [device] = useDevice()
 
     const handleCloseDialog = () => {
         setOpenDialog(false)
@@ -21,10 +23,10 @@ const Group = () => {
                 {/* Left */}
                 <Box
                     sx={{
-                        height: '100vh', width: 320, boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
+                        height: 'calc(100vh - 70px)', width: device.Desktop ? 320 : "100%", boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25)",
                         backgroundColor: (theme) => theme.palette.mode === "light" ? "#F8FAFF" : theme.palette.background
                     }}>
-                    <Stack p={3} spacing={2} sx={{ maxHeight: "100vh" }}>
+                    <Stack p={3} spacing={2} sx={{ maxHeight: "100%" }}>
                         <Stack >
                             <Typography variant='h5'>Groups</Typography>
                         </Stack>
@@ -46,13 +48,9 @@ const Group = () => {
                         <Stack spacing={2.5} sx={{ flexGrow: 1, overflowY: "auto", height: "100%" }}>
                             {/* SimpleBarStye */}
                             <Stack spacing={2.3}>
-                                <Typography variant='subtitle2' sx={{ color: '#676667' }} >Pinned</Typography>
-                                {/* Chat List */}
-                                {ChatList.filter(el => el.pinned).map(el => {
-                                    return <ChatElement key={el.id} {...el} />
-                                })}
-                                <Typography variant='subtitle2' sx={{ color: '#676667' }}>All Groups</Typography>
-                                {ChatList.filter(el => !el.pinned).map(el => {
+
+                                {/* <Typography variant='subtitle2' sx={{ color: '#676667' }}>All Groups</Typography> */}
+                                {ChatList.map(el => {
                                     return <ChatElement key={el.id} {...el} />
                                 })}
 

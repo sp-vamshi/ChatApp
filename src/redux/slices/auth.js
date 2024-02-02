@@ -33,6 +33,9 @@ const slice = createSlice({
     updateRegisterEmail(state, action) {
       state.email = action.payload.email;
     },
+    toggleLoader(state, action) {
+      state.isLoading = action.payload
+    }
   },
 });
 
@@ -61,12 +64,14 @@ export function LoginUser(formValues) {
             user_id: response?.data?.user_id,
           })
         );
+        dispatch(slice.actions.toggleLoader(false))
 
         window.localStorage.setItem("user_id", response?.data?.user_id);
         dispatch(showSnackBar({ severity: "success", message: response?.data?.message }));
       })
       .catch(function (error) {
         dispatch(showSnackBar({ severity: "error", message: error?.response?.data?.message }));
+        dispatch(slice.actions.toggleLoader(false))
       });
   };
 }
@@ -198,4 +203,10 @@ export function VerifyEmail(formValues) {
         dispatch(showSnackBar({ severity: "error", message: error?.message }));
       });
   };
+}
+
+export function ToggleLoader(isLoading) {
+  return (dispatch, getState) => {
+    dispatch(slice.actions.toggleLoader(isLoading))
+  }
 }

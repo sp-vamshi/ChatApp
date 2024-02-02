@@ -2,8 +2,14 @@ import { Stack, Box, IconButton, Typography } from '@mui/material'
 import { CaretLeft } from 'phosphor-react'
 import React from 'react'
 import ProfileForm from '../../sections/settings/ProfileForm'
+import { ChangeTab } from '../../redux/slices/app'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     return (
         <div>
             <Stack direction={"row"} sx={{ width: "100%" }}>
@@ -15,7 +21,10 @@ const Profile = () => {
                     <Stack p={4} spacing={5}>
                         {/* Header */}
                         <Stack direction={"row"} alignItems={"center"} spacing={3} >
-                            <IconButton>
+                            <IconButton onClick={() => {
+                                dispatch(ChangeTab({ tabNumber: 0 }))
+                                navigate("/app")
+                            }}>
                                 <CaretLeft size={24} color='#4B4B4B' />
                             </IconButton>
                             <Typography variant='h5'>Profile</Typography>

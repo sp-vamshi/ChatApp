@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -82,6 +81,9 @@ export const slice = createSlice({
         setCurrentConversation(state, action) {
             state.direct_chat.current_conversation = action.payload;
         },
+        clearCurrentMessages(state, action) {
+            state.direct_chat.current_messages = []
+        },
         fetchCurrentMessages(state, action) {
             const messages = action.payload.messages;
             const formatted_messages = messages.map((el) => ({
@@ -120,6 +122,11 @@ export const FetchDirectConversations = ({ conversations, user_id }) => {
 export const AddDirectConversation = ({ conversation, user_id }) => {
     return async (dispatch, getState) => {
         dispatch(slice.actions.addDirectConversation({ conversation, user_id }))
+    }
+}
+export const ClearCurrentMessages = () => {
+    return async (dispatch, getState) => {
+        dispatch(slice.actions.clearCurrentMessages())
     }
 }
 

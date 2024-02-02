@@ -1,3 +1,4 @@
+/* APP SCROLL BAR */
 ::-webkit-scrollbar {
   width: 4px !important;
 }
@@ -12,4 +13,69 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555 !important;
+}
+
+/* LOADER */
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-top: 100px;
+}
+
+.logo-container {
+  position: absolute;
+  background-color: rgba(237, 220, 152, 0.8);
+  border-radius: 50%;
+  height: 85px;
+  width: 85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-logo {
+  height: 75px;
+  width: 75px;
+}
+
+.a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  position: absolute;
+  background: linear-gradient(#0172af, #74c9fe);
+
+  animation: bubble 3s ease-in-out 0s infinite;
+  opacity: 0.8;
+}
+
+.b {
+  background: linear-gradient(#103ce7, #64e9ff);
+
+  animation: bubble 3s ease-in-out 0.5s infinite;
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+@keyframes bubble {
+  50% {
+    opacity: 0.6;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
 }
